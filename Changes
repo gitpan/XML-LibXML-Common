@@ -1,4 +1,6 @@
 Revision history for Perl extension XML::LibXML::Common.
+0.13
+    - fixed the UTF16 decoding bug (now the entire string is available)
 
 0.12_1 Sat Nov 16 11:30:00 2002
     - removed japanese test from default tests.

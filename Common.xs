@@ -121,7 +121,7 @@ encodeToUTF8( encoding, string )
                 croak( "return value missing!" );
             }
 
-            len = xmlStrlen( tstr );
+            len = xmlStrlen( tstr ); 
             RETVAL = newSVpvn( (const char *)tstr, len );
 #ifdef HAVE_UTF8
             SvUTF8_on(RETVAL);
@@ -165,6 +165,7 @@ decodeFromUTF8( encoding, string )
                     /* copy the string */
                     /* warn( "simply copy the string" ); */
                     tstr = xmlStrdup( realstring );
+                    len = xmlStrlen( tstr );
                 }
                 else {
                     LibXML_COMMON_error = NEWSV(0, 512);
@@ -191,7 +192,8 @@ decodeFromUTF8( encoding, string )
                     out   = xmlBufferCreate();
                     xmlBufferCCat( in, realstring );
                     if ( xmlCharEncOutFunc( coder, out, in ) >= 0 ) {
-                        tstr = xmlStrdup(out->content);
+                        len  = xmlBufferLength( out );
+                        tstr = xmlCharStrndup( xmlBufferContent( out ), len );
                     }
         
                     xmlBufferFree( in );
@@ -207,8 +209,8 @@ decodeFromUTF8( encoding, string )
                     }
                 }
 
-                len = xmlStrlen( tstr );
                 RETVAL = newSVpvn( (const char *)tstr, len );
+                xmlFree( tstr );
 #ifdef HAVE_UTF8
                 if ( enc == XML_CHAR_ENCODING_UTF8 ) {
                     SvUTF8_on(RETVAL);

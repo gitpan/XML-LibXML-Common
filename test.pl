@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test;
-BEGIN { plan tests => 5 };
+BEGIN { plan tests => 8 };
 use XML::LibXML::Common qw( :libxml :encoding );
 
 use constant TEST_STRING_GER => "Hänsel und Gretel";
@@ -37,11 +37,26 @@ ok( decodeFromUTF8( 'UTF-8' ,
     TEST_STRING_UTF );
 
 
+my $u16 = decodeFromUTF8( 'UTF-16',
+                          encodeToUTF8('UTF-8', TEST_STRING_UTF ) );
+ok( length($u16), 2*length(TEST_STRING_UTF));
 
+my $u16be = decodeFromUTF8( 'UTF-16BE',
+                            encodeToUTF8('UTF-8', TEST_STRING_UTF ) );
+ok( length($u16be), 2*length(TEST_STRING_UTF));
+
+my $u16le = decodeFromUTF8( 'UTF-16LE', 
+                            encodeToUTF8('UTF-8', TEST_STRING_UTF ) );
+ok( length($u16le), 2*length(TEST_STRING_UTF));
+
+#bad encoding name test.
 eval {
-    my $str = encodeToUTF8( "EUC-JP" ,"Föö" );
+    my $str = encodeToUTF8( "foo" , TEST_STRING_GER2 );
 };
 ok( length( $@ ) );
+
+# here should be a test to test badly encoded strings. but for some
+# reasons i am unable to create an apropriate test :(
 
 # uncomment these lines if your system is capable to handel not only i
 # so latin 1
