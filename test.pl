@@ -12,6 +12,8 @@ use XML::LibXML::Common qw( :libxml :encoding );
 use constant TEST_STRING_GER => "Hänsel und Gretel";
 use constant TEST_STRING_GER2 => "täst";
 use constant TEST_STRING_UTF => 'test';
+use constant TEST_STRING_JP  => 'À¸ÇþÀ¸ÊÆÀ¸Íñ';
+
 ok(1); # If we made it this far, we're ok.
 
 #########################
@@ -40,3 +42,9 @@ eval {
     my $str = encodeToUTF8( "EUC-JP" ,"Föö" );
 };
 ok( length( $@ ) );
+
+
+ok( decodeFromUTF8('EUC-JP',
+                   encodeToUTF8('EUC-JP',
+                                TEST_STRING_JP ) ),
+    TEST_STRING_JP );

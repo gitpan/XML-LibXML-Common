@@ -7,6 +7,13 @@ are shared by XML::LibXML, XML::GDOME and XML::LibXSLT (not all done, yet)
 This package is required at least for XML::LibXML 1.53 or later to 
 work properly.
 
+Of course libxml2 2.4.20 needs to be installed, to compile this package.
+you can get the latest libxml2 version from 
+    ftp://xmlsoft.org
+
+If this library is not installed, don't expect any XML::LibXML module to 
+compile.
+
 The latest cvs can be found at sourceforge:
 http://sourceforge.net/projects/perl-xml
 

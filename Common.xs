@@ -58,54 +58,63 @@ encodeToUTF8( encoding, string )
         realstring = SvPV(string, len);
         if ( realstring != NULL ) {
             /* warn("encode %s", realstring ); */
-            enc = xmlParseCharEncoding( encoding );
-
-            if ( enc == 0 ) {
-                /* this happens if the encoding is "" or NULL */
-                enc = XML_CHAR_ENCODING_UTF8;
-            }
-
-            if ( enc == XML_CHAR_ENCODING_UTF8 ) {
-                /* copy the string */
-                /* warn( "simply copy the string" ); */
-                tstr = xmlStrdup( realstring );
-            }
-            else {
-                LibXML_COMMON_error = NEWSV(0, 512);
-                xmlSetGenericErrorFunc(PerlIO_stderr(),
-                           (xmlGenericErrorFunc)LIBXML_COMMON_error_handler);
-
-
-                if ( enc > 1 ) {
-                    coder= xmlGetCharEncodingHandler( enc );
+#ifdef HAVE_UTF8
+            if ( !DO_UTF8(string) && encoding != NULL ) {
+#else 
+            if ( encoding != NULL ) {
+#endif
+                enc = xmlParseCharEncoding( encoding );
+    
+                if ( enc == 0 ) {
+                    /* this happens if the encoding is "" or NULL */
+                    enc = XML_CHAR_ENCODING_UTF8;
                 }
-                else if ( enc == XML_CHAR_ENCODING_ERROR ){
-                    coder =xmlFindCharEncodingHandler( encoding );
+
+                if ( enc == XML_CHAR_ENCODING_UTF8 ) {
+                    /* copy the string */
+                    /* warn( "simply copy the string" ); */
+                    tstr = xmlStrdup( realstring );
                 }
                 else {
-                    croak("no encoder found\n");
-                }
+                    LibXML_COMMON_error = NEWSV(0, 512);
+                    xmlSetGenericErrorFunc(PerlIO_stderr(),
+                               (xmlGenericErrorFunc)LIBXML_COMMON_error_handler);
 
-                if ( coder == NULL ) {  
-                    croak( "cannot encode string" );
-                }
+    
+                    if ( enc > 1 ) {
+                        coder= xmlGetCharEncodingHandler( enc );
+                    }
+                    else if ( enc == XML_CHAR_ENCODING_ERROR ){
+                        coder =xmlFindCharEncodingHandler( encoding );
+                    }
+                    else {
+                        croak("no encoder found\n");
+                    }
+
+                    if ( coder == NULL ) {  
+                        croak( "cannot encode string" );
+                    }
                 
-                in    = xmlBufferCreate();
-                out   = xmlBufferCreate();
-                xmlBufferCCat( in, realstring );
-                if ( xmlCharEncInFunc( coder, out, in ) >= 0 ) {
-                    tstr = xmlStrdup( out->content );
-                }
+                    in    = xmlBufferCreate();
+                    out   = xmlBufferCreate();
+                    xmlBufferCCat( in, realstring );
+                    if ( xmlCharEncInFunc( coder, out, in ) >= 0 ) {
+                        tstr = xmlStrdup( out->content );
+                    }
         
-                xmlBufferFree( in );
-                xmlBufferFree( out );
-                xmlCharEncCloseFunc( coder );
+                    xmlBufferFree( in );
+                    xmlBufferFree( out );
+                    xmlCharEncCloseFunc( coder );
 
-                sv_2mortal(LibXML_COMMON_error);
+                    sv_2mortal(LibXML_COMMON_error);
 
-                if ( SvCUR( LibXML_COMMON_error ) > 0 ) {
-                    croak(SvPV(LibXML_COMMON_error, len));
+                    if ( SvCUR( LibXML_COMMON_error ) > 0 ) {
+                        croak(SvPV(LibXML_COMMON_error, len));
+                    }
                 }
+            }
+            else {
+                tstr = xmlStrdup( realstring );
             }
 
             if ( !tstr ) {
@@ -162,11 +171,13 @@ decodeFromUTF8( encoding, string )
                     xmlSetGenericErrorFunc(PerlIO_stderr(),
                            (xmlGenericErrorFunc)LIBXML_COMMON_error_handler);
 
+                    sv_2mortal(LibXML_COMMON_error);
+
                     if ( enc > 1 ) {
                         coder= xmlGetCharEncodingHandler( enc );
                     }
                     else if ( enc == XML_CHAR_ENCODING_ERROR ){
-                        coder =xmlFindCharEncodingHandler( encoding );
+                        coder = xmlFindCharEncodingHandler( encoding );
                     }
                     else {
                         croak("no encoder found\n");
@@ -186,8 +197,6 @@ decodeFromUTF8( encoding, string )
                     xmlBufferFree( in );
                     xmlBufferFree( out );
                     xmlCharEncCloseFunc( coder );
-
-                    sv_2mortal(LibXML_COMMON_error);
 
                     if ( SvCUR( LibXML_COMMON_error ) > 0 ) {
                         croak(SvPV(LibXML_COMMON_error, len));

@@ -14,7 +14,7 @@ use vars qw( @ISA $VERSION @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 @ISA = qw(DynaLoader Exporter);
 
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 bootstrap XML::LibXML::Common $VERSION;
 
@@ -215,7 +215,7 @@ use constant GDOME_XINCLUDE_END          => 20;
 1;
 #-------------------------------------------------------------------------#
 __END__
-#-------------------------------------------------------------------------#
+
 =head1 NAME
 
 XML::LibXML::Common - Routines and Constants common for XML::LibXML and XML::GDOME
