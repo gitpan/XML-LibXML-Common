@@ -1,5 +1,9 @@
 Revision history for Perl extension XML::LibXML::Common.
 
+0.12_1 Sat Nov 16 11:30:00 2002
+    - removed japanese test from default tests.
+      (solaris cannot handle it by default)
+
 0.12 Tue Nov 12 12:00:00 2002
     - Encoding fix provided by Daisuke Maki
 

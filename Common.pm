@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------#
-# $Id: Common.pm,v 1.3 2002/10/21 16:43:16 phish108 Exp $
+# $Id: Common.pm,v 1.4 2002/11/15 20:10:13 phish108 Exp $
 #-------------------------------------------------------------------------#
 package XML::LibXML::Common;
 
@@ -14,7 +14,7 @@ use vars qw( @ISA $VERSION @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 @ISA = qw(DynaLoader Exporter);
 
-$VERSION = '0.12';
+$VERSION = '0.12_1';
 
 bootstrap XML::LibXML::Common $VERSION;
 
