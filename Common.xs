@@ -9,7 +9,7 @@ extern "C" {
 #include "ppport.h"
 
 #include <libxml/parser.h>
-#include <libxml/tree.h>
+/* #include <libxml/tree.h> */
 
 #ifdef __cplusplus
 }
@@ -117,6 +117,7 @@ encodeToUTF8( encoding, string )
 #ifdef HAVE_UTF8
             SvUTF8_on(RETVAL);
 #endif  
+            xmlFree(tstr);
         }
         else {
             XSRETURN_UNDEF;

@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------#
-# $Id: Common.pm,v 1.1.1.1 2002/09/02 09:15:16 phish108 Exp $
+# $Id: Common.pm,v 1.3 2002/10/21 16:43:16 phish108 Exp $
 #-------------------------------------------------------------------------#
 package XML::LibXML::Common;
 
@@ -14,7 +14,7 @@ use vars qw( @ISA $VERSION @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 @ISA = qw(DynaLoader Exporter);
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 bootstrap XML::LibXML::Common $VERSION;
 
@@ -291,6 +291,13 @@ within an eval block to avoid a script to stop.
 =head1 AUTHOR
 
 Christian Glahn, (christian.glahn@uibk.ac.at) Innsbruck University
+
+=head1 COPYRIGHT
+
+(c) 2002 Christian Glahn. All rights reserved. 
+
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
