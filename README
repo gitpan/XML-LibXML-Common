@@ -1,0 +1,18 @@
+XML::LibXML::Common version 0.10
+================================
+
+XML::LibXML::Common contains several constants and functions that
+are shared by XML::LibXML, XML::GDOME and XML::LibXSLT (not all done, yet)
+
+This package is required at least for XML::LibXML 1.53 or later to 
+work properly.
+
+the latest cvs can be found at sourceforge:
+
+http://sourceforge.net/projects/perl-xml
+
+for requests please contact me by e-mail. i try to answer my e-mails
+on a regular basis. but since i am offline from time to time it may take
+up to a week before i will be able to answer.
+
+christian glahn ( christian.glahn at uibk.ac.at )

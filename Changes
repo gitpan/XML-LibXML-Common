@@ -1,0 +1,8 @@
+Revision history for Perl extension XML::LibXML::Common.
+
+0.01  Sat Aug 31 18:29:05 2002
+	- original version; created by h2xs 1.21 with options
+
+0.10 Sat Aug 31 20:00:00 2002
+	- implemented encoding functions 
+      - libxml/ libgdome conform implementation
